@@ -25,4 +25,13 @@ router.get('/api/userStories', ensureAuth, async (req, res) => {
     }
 })
 
+router.get('/api/publicUserStories/:id', ensureAuth, async (req, res) => {
+    try {
+        const stories = await Story.find({user:req.params.id, status:"public"}).lean()
+        res.json(stories)
+    } catch (err) {
+        console.error(err)
+    }
+})
+
 module.exports = router
